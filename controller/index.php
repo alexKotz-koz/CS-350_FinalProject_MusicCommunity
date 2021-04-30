@@ -64,9 +64,7 @@ function upload(){
             $tmpName = $file['tmp_name'];
             $tmpCoverName = $coverArt['tmp_name'];
             $fileName = $file['name'];
-            echo $fileName;
             $coverArtName = $coverArt['name'];
-            echo $coverArtName;
             $path = getcwd(). "\uploads\\". $fileName;
             $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
             move_uploaded_file($tmpName, $path);
