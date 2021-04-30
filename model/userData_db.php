@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 $dsn = 'mysql:host=localhost;dbname=cs_350';
 $username = 'student';
 $password = 'CS350';

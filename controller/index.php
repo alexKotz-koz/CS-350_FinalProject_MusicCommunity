@@ -3,7 +3,7 @@ require("../model/account_db.php");
 require("../model/userData_db.php");
 
 $page = $_GET['page'];
-$action = $_POST['action'];
+$action = $_POST['action'] ?? NULL;
 
 function createAccount(){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
@@ -62,29 +62,18 @@ function upload(){
 
     ///include read me for php.ini
 
-    $songName = $_POST['songName'];
-    $songFile = $_FILES['songFile'] ?? NULL;
-    $coverArt = $_FILES['coverArt'] ?? NULL;
-
-    if($songFile){
-
-        if($_SESSION['user_loggin_in']===true){
-            $tmpName = $songFile['tmp_name'];
-            $fileName = $songFile['name'];
-            echo $fileName;
-            $path = getcwd()."/uploads/song/".$fileName;
-            echo $tmpName, $path;
-            move_uploaded_file($tmpName,$path);
-            echo $_SESSION['user_loggin_in'];
-            //header("Location: ../view/home_view.php");
-        }
-
-    } else{
-        echo "Cant upload file";
+    $file = $_FILES['uploadedSongFile'] ?? NULL;
+    $coverArt = $_FILES['uploadedCoverArt'] ?? NULL;
+    if($file){
+        $tmpName = $file['tmp_name'];
+        $tmpCoverName = $coverArt['tmp_name'];
+        $fileName = $file['name'];
+        $coverArtName = $coverArt['name'];
+        $path = getcwd(). "\uploads\\". $fileName;
+        $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
+        move_uploaded_file($tmpName, $path);
+        move_uploaded_file($tmpCoverName, $coverArtPath);
     }
-
-
-
 
 }
 

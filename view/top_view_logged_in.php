@@ -68,7 +68,6 @@
                 <a href="myAccount_view.php/index.php?page=myAccount">My Account</a>
                 <a href="../controller/index.php?page=logout">Sign Out</a>
                 <a href="../controller/index.php?page=upload">Upload</a>
-
         </div>
     </div>
 

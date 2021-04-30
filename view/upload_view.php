@@ -2,13 +2,9 @@
 include("top_view_logged_in.php");
 ?>
     <form action="../controller/index.php?page=upload" method="post" enctype="multipart/form-data">
-        <label for="songName">Song Name: </label>
-        <input type="text" name="songName" id="songName"><br>
-        <label for="songFile">Song File: </label>
-        <input type="file" name="songFile" id="songFile"><br>
-        <label for="coverArt">Cover Art: </label>
-        <input type="file" name="coverArt" id="coverArt">
-        <input type="submit" name="submit">
+        <label for="songFile">Song File: </label><input type="file" name="uploadedSongFile" id="songFile"><br>
+        <label for="coverArt">Cover Art: </label><input type="file" name="uploadedCoverArt" id="coverArt">
+        <input type="submit" name="submit" value="Upload">
         <input type="hidden" name="action" value="upload">
     </form>
 <?php
