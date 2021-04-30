@@ -3,7 +3,7 @@
 $dsn = 'mysql:host=localhost;dbname=cs_350';
 $username = 'student';
 $password = 'CS350';
-$sessionLogin = $_SESSION['user_loggin_in'];
+$sessionLogin = $_SESSION['user_loggin_in'] ?? NULL;
 
 function displayAllBrowse($db){
     $selectAll = "SELECT * FROM userData";
@@ -13,13 +13,12 @@ function displayAllBrowse($db){
     return $fetchAll;
 }
 
-function uploadToUserAccount($db,$id,$songName,$songFile,$coverArt){
-    $insert = "INSERT INTO userData (userSongName, userSongFile, userCoverArt, ownerID) VALUES (:userSongName,:userSongFile,:userCoverArt,:ownerID) WHERE ownerID = {$id}";
-    $insertStatement=$db->prepart($insert);
+function uploadToUserAccount($db,$songName,$songFile,$coverArt){
+    $insert = "INSERT INTO userData (userSongName, userSongFile, userCoverArt) VALUES (:userSongName,:userSongFile,:userCoverArt)";
+    $insertStatement=$db->prepare($insert);
     $insertStatement->bindValue(':userSongName',$songName);
     $insertStatement->bindValue(':userSongFile',$songFile);
     $insertStatement->bindValue(':userCoverArt',$coverArt);
-    $insertStatement->bindValue(':ownerID',$id);
     $insertStatement->execute();
     $insertStatement->closeCursor();
 

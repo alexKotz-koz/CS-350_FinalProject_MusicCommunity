@@ -1,8 +1,7 @@
 <?php
-echo "here";
 require("../model/userData_db.php");
 
-include("top_view_logged_out.php");
+include("top_view_logged_in.php");
 $dsn = 'mysql:host=localhost;dbname=cs_350';
 $username = 'student';
 $password = 'CS350';

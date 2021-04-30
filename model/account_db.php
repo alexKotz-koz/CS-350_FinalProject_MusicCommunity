@@ -16,8 +16,7 @@ function insertAccount($db,$fullName,$favoriteArtist,$username,$password){
     $insertStatement->closeCursor();
 }
 
-function validate($db,$user,$pass): bool
-{
+function validate($db,$user,$pass){
     $find = "SELECT * FROM accounts";
     echo$find;
     $findStatement = $db->prepare($find);
@@ -28,14 +27,12 @@ function validate($db,$user,$pass): bool
             $userPassword = $i[4];
             if(password_verify($pass,$userPassword) === true){
             $_SESSION['user_loggin_in'] = true;
-            return $_SESSION['user_loggin_in'];
+            header("Location: ../view/myAccount_view.php");
         }
         else{
-                return false;
+                echo "BAD INPUT";
             }
         }
     }
     $findStatement->closeCursor();
-
-
 }

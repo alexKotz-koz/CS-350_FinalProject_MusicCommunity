@@ -44,13 +44,6 @@ function login(){
         $db = new PDO($dsn,$username, $password);
         if(isset($usernameForm) && isset($passwordForm)){
             validate($db,$usernameForm,$passwordForm);
-            if($_SESSION['user_loggin_in'] === true){
-                header("Location: ../view/myAccount_view.php");
-            }
-            else{
-                //change echo below to forward to error page
-                echo'<h1>Login failed please try again</h1>';
-            }
         }
     }catch (PDOException $e){
         $msg = $e->getMessage();
@@ -59,20 +52,33 @@ function login(){
 }
 
 function upload(){
-
+    $dsn = 'mysql:host=localhost;dbname=cs_350';
+    $username = 'student';
+    $password = 'CS350';
     ///include read me for php.ini
-
-    $file = $_FILES['uploadedSongFile'] ?? NULL;
-    $coverArt = $_FILES['uploadedCoverArt'] ?? NULL;
-    if($file){
-        $tmpName = $file['tmp_name'];
-        $tmpCoverName = $coverArt['tmp_name'];
-        $fileName = $file['name'];
-        $coverArtName = $coverArt['name'];
-        $path = getcwd(). "\uploads\\". $fileName;
-        $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
-        move_uploaded_file($tmpName, $path);
-        move_uploaded_file($tmpCoverName, $coverArtPath);
+    try{
+        $db = new PDO($dsn,$username, $password);
+        $file = $_FILES['uploadedSongFile'] ?? NULL;
+        $coverArt = $_FILES['uploadedCoverArt'] ?? NULL;
+        if($file){
+            $tmpName = $file['tmp_name'];
+            $tmpCoverName = $coverArt['tmp_name'];
+            $fileName = $file['name'];
+            echo $fileName;
+            $coverArtName = $coverArt['name'];
+            echo $coverArtName;
+            $path = getcwd(). "\uploads\\". $fileName;
+            $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
+            move_uploaded_file($tmpName, $path);
+            move_uploaded_file($tmpCoverName, $coverArtPath);
+            uploadToUserAccount($db,$fileName,$path, $coverArtName);
+            if(isset($_SESSION['user_loggin_in']) === true){
+                header("Location: ../view/browse_view.php");
+            }
+        }
+    }catch (PDOException $e){
+        $msg = $e->getMessage();
+        echo "<p>ERROR: $msg</p>";
     }
 
 }
