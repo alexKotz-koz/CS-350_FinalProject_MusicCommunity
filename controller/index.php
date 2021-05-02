@@ -1,9 +1,10 @@
 <?php
-require("../model/account_db.php");
 require("../model/userData_db.php");
 
 $page = $_GET['page'];
 $action = $_POST['action'] ?? NULL;
+$usernameForm = $_POST['username'] ?? NULL;
+$passwordForm = $_POST['password'] ?? NULL;
 
 function createAccount(){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
@@ -11,7 +12,6 @@ function createAccount(){
     $password = 'CS350';
 
     $fullNameForm = $_POST['fullName'] ?? NULL;
-    $favoriteArtist = $_POST['favoriteArtist'] ?? NULL;
     $usernameForm = $_POST['username'] ?? NULL;
     $passwordForm = $_POST['password'] ?? NULL;
     $confirmPassword = $_POST['confirmPassword'] ?? NULL;
@@ -23,7 +23,7 @@ function createAccount(){
             }
             else{
                 $passwordForm = password_hash($passwordForm,PASSWORD_DEFAULT);
-                insertAccount($db,$fullNameForm,$favoriteArtist,$usernameForm,$passwordForm);
+                insertAccount($db,$fullNameForm,$usernameForm,$passwordForm);
                 header("Location: ../view/home_view.php");
             }
         }
@@ -33,12 +33,11 @@ function createAccount(){
     }
 }
 
-function login(){
+function login($usernameForm, $passwordForm) {
+
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
     $password = 'CS350';
-    $usernameForm = $_POST['username'];
-    $passwordForm = $_POST['password'];
 
     try {
         $db = new PDO($dsn,$username, $password);
@@ -51,7 +50,7 @@ function login(){
     }
 }
 
-function upload(){
+function upload($usernameForm){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
     $password = 'CS350';
@@ -69,8 +68,8 @@ function upload(){
             $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
             move_uploaded_file($tmpName, $path);
             move_uploaded_file($tmpCoverName, $coverArtPath);
-            uploadToUserAccount($db,$fileName,$path, $coverArtName);
-            if(isset($_SESSION['user_loggin_in']) === true){
+            uploadToUserAccount($db, $fileName, $path, $coverArtName);
+           if(isset($_SESSION['user_loggin_in']) === true){
                 header("Location: ../view/browse_view.php");
             }
         }
@@ -92,7 +91,9 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
         case 'logout':
             session_unset();
             $_SESSION['user_loggin_in'] = false;
-            include("../view/home_view.php");
+            unset($usernameForm);
+            unset($passwordForm);
+            include("../view/login_view.php");
             break;
         case 'upload':
             include("../view/upload_view.php");
@@ -115,10 +116,10 @@ else if ($_SERVER['REQUEST_METHOD']=='POST'){
             createAccount();
             break;
         case 'login':
-            login();
+            login($usernameForm, $passwordForm);
             break;
         case 'upload':
-            upload();
+            upload($usernameForm);
             break;
     }
 

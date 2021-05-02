@@ -6,6 +6,7 @@ include("top_view_logged_out.php");
         <input type="text" name="username" id="username" required><br>
         <label for="password">Password: </label>
         <input type="password" name="password" id="password" required><br>
+        <input type="hidden" name="user_session_id" value="username">
         <input type="submit">
         <input type="hidden" name="action" value="login">
     </form>
