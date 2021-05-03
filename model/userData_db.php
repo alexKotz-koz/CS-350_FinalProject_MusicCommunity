@@ -3,9 +3,9 @@ session_start();
 $dsn = 'mysql:host=localhost;dbname=cs_350';
 $username = 'student';
 $password = 'CS350';
+
 $sessionLogin = $_SESSION['user_loggin_in'] ?? NULL;
 $USER_NAME = $_SESSION['username'] ?? NULL;
-
 
 //Account Users
 function insertAccount($db,$fullName,$username,$password){
@@ -17,7 +17,7 @@ function insertAccount($db,$fullName,$username,$password){
     $insertStatement->execute();
     $insertStatement->closeCursor();
 }
-
+//Account Users
 function validate($db,$user,$pass){
     $find = "SELECT * FROM accounts";
     $findStatement = $db->prepare($find);
@@ -38,7 +38,7 @@ function validate($db,$user,$pass){
     }
     $findStatement->closeCursor();
 }
-
+//User Data
 function displayAllBrowse($db){
     $selectAll = "SELECT * FROM userData";
     $selectAllStatement = $db->prepare($selectAll);
@@ -47,6 +47,7 @@ function displayAllBrowse($db){
     return $fetchAll;
 }
 
+// User Data
 function uploadToUserAccount($db,$songName,$songFile,$coverArt){
     $userID = (string) $_SESSION['userID'];
     $insert = "INSERT INTO userdata (userSongName, userSongFile, userCoverArt, ownerID) VALUES(:userSongName,:userSongFile,:userCoverArt, :ownerID)";
@@ -57,6 +58,14 @@ function uploadToUserAccount($db,$songName,$songFile,$coverArt){
     $insertStatement->bindValue(':ownerID', $userID);
     $insertStatement->execute();
     $insertStatement->closeCursor();
-
+}
+// User Data
+function displayUserSongs($db){
+    $userID = (string) $_SESSION['userID'];
+    $selectAll = "SELECT * FROM userdata WHERE ownerID={$userID}";
+    $selectAllStatement = $db->prepare($selectAll);
+    $selectAllStatement->execute();
+    $fetchAll = $selectAllStatement->fetchAll();
+    return $fetchAll;
 }
 

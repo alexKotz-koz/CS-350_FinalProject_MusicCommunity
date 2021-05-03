@@ -4,28 +4,46 @@
     <meta charset="UTF-8">
     <title>Music Community</title>
     <style>
+        body{
+            background-image: url("../controller/Zenith2 copy.jpeg") ;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: #333;
+        }
+        label{
+            font-size: large;
+            text-align: left;
+            color: white;
+        }
+        th{
+            color: white;
+        }
+        td{
+            color: white;
+        }
+        p{
+            color: white;
+        }
+        h1, h2{
+            color:white;
+        }
         .nav {
             position: relative;
             overflow: hidden;
             background-color: #333;
         }
-
         .nav a {
             float: left;
             color: #f2f2f2;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
-            font-size: 17px;
+            font-size: 24px;
         }
-
         .nav a:hover {
             background-color: #ddd;
             color: black;
         }
-
-
-
         .nav-centered a {
             float: none;
             position: absolute;
@@ -37,14 +55,12 @@
         .nav-right {
             float: right;
         }
-
         /* Responsive navigation menu (for mobile devices) */
         @media screen and (max-width: 600px) {
             .nav a, .nav-right {
                 float: none;
                 display: block;
             }
-
             .nav-centered a {
                 position: relative;
                 top: 0;
@@ -54,6 +70,7 @@
         }
     </style>
 </head>
+
 <body>
 <div class="nav">
     <div class="nav-left">
@@ -65,8 +82,8 @@
         <a href="../controller/index.php?page=browse">Browse</a>
     </div>
     <div class="nav-right">
-            <a href="../controller/index.php?page=login">Sign In</a>
-           <a href="../controller/index.php?page=createAccount">Create Account</a>
+        <a href="../controller/index.php?page=login">Sign In</a>
+        <a href="../controller/index.php?page=createAccount">Create Account</a>
     </div>
 
 </div>

@@ -1,5 +1,6 @@
 <?php
 if(isset($_SESSION['user_loggin_in']) === true){
+    include("top_view_logged_in.php");
     ?>
     <form action="../controller/index.php?page=upload" method="post" enctype="multipart/form-data">
         <label for="songFile">Song File: </label><input type="file" name="uploadedSongFile" id="songFile"><br>

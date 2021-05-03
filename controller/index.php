@@ -3,8 +3,7 @@ require("../model/userData_db.php");
 
 $page = $_GET['page'];
 $action = $_POST['action'] ?? NULL;
-$usernameForm = $_POST['username'] ?? NULL;
-$passwordForm = $_POST['password'] ?? NULL;
+
 function createAccount(){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
@@ -32,12 +31,12 @@ function createAccount(){
     }
 }
 
-function login($usernameForm, $passwordForm) {
-
+function login() {
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
     $password = 'CS350';
-
+    $usernameForm = $_POST['username'] ?? NULL;
+    $passwordForm = $_POST['password'] ?? NULL;
     try {
         $db = new PDO($dsn,$username, $password);
         if(isset($usernameForm) && isset($passwordForm)){
@@ -49,7 +48,7 @@ function login($usernameForm, $passwordForm) {
     }
 }
 
-function upload($usernameForm){
+function upload(){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
     $password = 'CS350';
@@ -68,9 +67,9 @@ function upload($usernameForm){
             $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
             move_uploaded_file($tmpName, $path);
             move_uploaded_file($tmpCoverName, $coverArtPath);
-            uploadToUserAccount($db, $fileName, $path, $coverArtName,$usernameForm);
+            uploadToUserAccount($db, $fileName, $path, $coverArtName);
            if(isset($_SESSION['user_loggin_in']) === true){
-                header("Location: ../view/browse_view.php");
+                header("Location: ../view/myAccount_view.php");
             }
         }
     }catch (PDOException $e){
@@ -91,8 +90,6 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
         case 'logout':
             session_unset();
             $_SESSION['user_loggin_in'] = false;
-            unset($usernameForm);
-            unset($passwordForm);
             include("../view/login_view.php");
             break;
         case 'upload':
@@ -116,10 +113,10 @@ else if ($_SERVER['REQUEST_METHOD']=='POST'){
             createAccount();
             break;
         case 'login':
-            login($usernameForm, $passwordForm);
+            login();
             break;
         case 'upload':
-            upload($usernameForm);
+            upload();
             break;
     }
 
