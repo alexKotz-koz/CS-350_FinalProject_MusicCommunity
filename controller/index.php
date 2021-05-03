@@ -5,7 +5,6 @@ $page = $_GET['page'];
 $action = $_POST['action'] ?? NULL;
 $usernameForm = $_POST['username'] ?? NULL;
 $passwordForm = $_POST['password'] ?? NULL;
-
 function createAccount(){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
@@ -54,6 +53,7 @@ function upload($usernameForm){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
     $password = 'CS350';
+
     ///include read me for php.ini
     try{
         $db = new PDO($dsn,$username, $password);
@@ -68,7 +68,7 @@ function upload($usernameForm){
             $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
             move_uploaded_file($tmpName, $path);
             move_uploaded_file($tmpCoverName, $coverArtPath);
-            uploadToUserAccount($db, $fileName, $path, $coverArtName);
+            uploadToUserAccount($db, $fileName, $path, $coverArtName,$usernameForm);
            if(isset($_SESSION['user_loggin_in']) === true){
                 header("Location: ../view/browse_view.php");
             }

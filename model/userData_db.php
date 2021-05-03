@@ -4,6 +4,8 @@ $dsn = 'mysql:host=localhost;dbname=cs_350';
 $username = 'student';
 $password = 'CS350';
 $sessionLogin = $_SESSION['user_loggin_in'] ?? NULL;
+$USER_NAME = $_SESSION['username'] ?? NULL;
+
 
 //Account Users
 function insertAccount($db,$fullName,$username,$password){
@@ -26,6 +28,7 @@ function validate($db,$user,$pass){
             $userPassword = $i[3];
             if(password_verify($pass,$userPassword) === true){
                 $_SESSION['user_loggin_in'] = true;
+                $_SESSION['userID'] = $i[0];
                 header("Location: ../view/myAccount_view.php");
             }
             else{
@@ -45,11 +48,13 @@ function displayAllBrowse($db){
 }
 
 function uploadToUserAccount($db,$songName,$songFile,$coverArt){
-    $insert = "INSERT INTO userData (userSongName, userSongFile, userCoverArt) VALUES (:userSongName,:userSongFile,:userCoverArt)";
+    $userID = (string) $_SESSION['userID'];
+    $insert = "INSERT INTO userdata (userSongName, userSongFile, userCoverArt, ownerID) VALUES(:userSongName,:userSongFile,:userCoverArt, :ownerID)";
     $insertStatement=$db->prepare($insert);
     $insertStatement->bindValue(':userSongName',$songName);
     $insertStatement->bindValue(':userSongFile',$songFile);
     $insertStatement->bindValue(':userCoverArt',$coverArt);
+    $insertStatement->bindValue(':ownerID', $userID);
     $insertStatement->execute();
     $insertStatement->closeCursor();
 
