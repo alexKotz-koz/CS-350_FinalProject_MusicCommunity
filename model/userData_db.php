@@ -48,13 +48,13 @@ function displayAllBrowse($db){
 }
 
 // User Data
-function uploadToUserAccount($db,$songName,$songFile,$coverArt){
+function uploadToUserAccount($db,$songName,$songFile,$coverArtPath){
     $userID = (string) $_SESSION['userID'];
     $insert = "INSERT INTO userdata (userSongName, userSongFile, userCoverArt, ownerID) VALUES(:userSongName,:userSongFile,:userCoverArt, :ownerID)";
     $insertStatement=$db->prepare($insert);
     $insertStatement->bindValue(':userSongName',$songName);
     $insertStatement->bindValue(':userSongFile',$songFile);
-    $insertStatement->bindValue(':userCoverArt',$coverArt);
+    $insertStatement->bindValue(':userCoverArt',$coverArtPath);
     $insertStatement->bindValue(':ownerID', $userID);
     $insertStatement->execute();
     $insertStatement->closeCursor();
@@ -69,3 +69,21 @@ function displayUserSongs($db){
     return $fetchAll;
 }
 
+function getUserID($db){
+   // $userID = (string) $_SESSION['userID'];
+    $selectName = "SELECT * FROM accounts JOIN userdata on accounts.id=userdata.ownerID";
+    $selectNameStatement = $db->prepare($selectName);
+    $selectNameStatement->execute();
+    $fetch = $selectNameStatement->fetchAll();
+    return $fetch;
+}
+
+function deleteSong($db,$id){
+    $userID = (string) $_SESSION['userID'];
+    echo $userID;
+    $delete = "DELETE FROM userdata WHERE userdata.id={$id}";
+
+    $deleteStatement = $db->prepare($delete);
+    $deleteStatement->execute();
+    $deleteStatement->closeCursor();
+}

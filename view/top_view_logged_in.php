@@ -22,6 +22,7 @@
             color: white;
         }
         td{
+            padding: 15px;
             color: white;
         }
         p{

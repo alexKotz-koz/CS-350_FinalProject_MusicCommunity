@@ -62,13 +62,15 @@ function upload(){
             $tmpName = $file['tmp_name'];
             $tmpCoverName = $coverArt['tmp_name'];
             $fileName = $file['name'];
+            print_r($file);
+            $songFile = $file['file'];
             $coverArtName = $coverArt['name'];
             $path = getcwd(). "\uploads\\". $fileName;
             $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
             move_uploaded_file($tmpName, $path);
             move_uploaded_file($tmpCoverName, $coverArtPath);
-            uploadToUserAccount($db, $fileName, $path, $coverArtName);
-           if(isset($_SESSION['user_loggin_in']) === true){
+            uploadToUserAccount($db, $fileName, $fileName, $coverArtName);
+            if(isset($_SESSION['user_loggin_in']) === true){
                 header("Location: ../view/myAccount_view.php");
             }
         }
@@ -77,6 +79,23 @@ function upload(){
         echo "<p>ERROR: $msg</p>";
     }
 
+}
+
+function delete(){
+    $dsn = 'mysql:host=localhost;dbname=cs_350';
+    $username = 'student';
+    $password = 'CS350';
+    try{
+        $db = new PDO($dsn,$username, $password);
+        //$file = $_FILES['uploadedSongFile'] ?? NULL;
+       // $coverArt = $_FILES['uploadedCoverArt'] ?? NULL;
+        $id = $_GET['id'];
+        deleteSong($db,$id);
+        header("Location: ../view/myAccount_view.php");
+    }catch (PDOException $e){
+        $msg = $e->getMessage();
+        echo "<p>ERROR: $msg</p>";
+    }
 }
 
 if($_SERVER['REQUEST_METHOD']=='GET'){
@@ -103,6 +122,9 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
             break;
         case 'myAccount':
             include("../view/myAccount_view.php");
+            break;
+        case 'delete':
+            delete();
             break;
 
     }

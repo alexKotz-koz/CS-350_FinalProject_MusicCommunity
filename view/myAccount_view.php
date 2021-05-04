@@ -9,10 +9,19 @@ try{
     $db = new PDO($dsn,$username,$password);
     $userSongs = displayUserSongs($db);
     echo'<table>
-            <tr><td>Song Title</td><td>Album Cover</td></tr>
+            <tr>
+            <td>Song Title</td>
+            <td>Album Cover</td>
+            </tr>
             ';
     foreach ($userSongs as $userData){
-        echo"<tr><td>{$userData['userSongName']}</td><td>{$userData['userCoverArt']}</td></tr>";
+        $imageFilePath = "http://127.0.0.1:80/Homework/final/controller/coverArt/".$userData['userCoverArt'];
+
+        echo"<tr><td>{$userData['userSongName']}</td>
+            <td><img src='../controller/coverArt/{$userData['userCoverArt']}' width='100px' height='100px'></td>
+            <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav' </audio></td>
+            <td><a href='../controller/index.php?page=delete&id={$userData['id']}'/>Delete</td>
+        </tr>";
     }
     '</table>';
 }catch(PDOException $e){
