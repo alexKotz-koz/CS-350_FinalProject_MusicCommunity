@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['user_loggin_in']===true){
+if (isset($_SESSION['user_loggin_in'])===true){
     include("top_view_logged_in.php");
 } else {
     include("top_view_logged_out.php");
@@ -25,6 +25,7 @@ try{
         echo"<tr><td>{$userData['fullName']}</td>
             <td>{$userData['userSongName']}</td>
             <td><img src='../controller/coverArt/{$userData['userCoverArt']}' width='100px' height='100px'></td>
+            <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav' </audio></td>
             <td>{$userData['ownerID']}</td></tr>";
     }
 

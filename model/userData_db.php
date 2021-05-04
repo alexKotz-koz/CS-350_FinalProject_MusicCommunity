@@ -82,7 +82,6 @@ function deleteSong($db,$id){
     $userID = (string) $_SESSION['userID'];
     echo $userID;
     $delete = "DELETE FROM userdata WHERE userdata.id={$id}";
-
     $deleteStatement = $db->prepare($delete);
     $deleteStatement->execute();
     $deleteStatement->closeCursor();

@@ -61,15 +61,15 @@ function upload(){
         if($file){
             $tmpName = $file['tmp_name'];
             $tmpCoverName = $coverArt['tmp_name'];
-            $fileName = $file['name'];
-            print_r($file);
-            $songFile = $file['file'];
+            $fileNameOg = $file['name'];
+            $fileName = str_replace(".wav","", $fileNameOg);
+            echo $fileName;
             $coverArtName = $coverArt['name'];
             $path = getcwd(). "\uploads\\". $fileName;
             $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
             move_uploaded_file($tmpName, $path);
             move_uploaded_file($tmpCoverName, $coverArtPath);
-            uploadToUserAccount($db, $fileName, $fileName, $coverArtName);
+            uploadToUserAccount($db, $fileName, $fileNameOg, $coverArtName);
             if(isset($_SESSION['user_loggin_in']) === true){
                 header("Location: ../view/myAccount_view.php");
             }
@@ -108,6 +108,7 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
             break;
         case 'logout':
             session_unset();
+            session_destroy();
             $_SESSION['user_loggin_in'] = false;
             include("../view/login_view.php");
             break;

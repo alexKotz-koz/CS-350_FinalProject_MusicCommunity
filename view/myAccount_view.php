@@ -8,7 +8,8 @@ $password = 'CS350';
 try{
     $db = new PDO($dsn,$username,$password);
     $userSongs = displayUserSongs($db);
-    echo'<table>
+    echo'
+            <table>
             <tr>
             <td>Song Title</td>
             <td>Album Cover</td>
@@ -19,8 +20,12 @@ try{
 
         echo"<tr><td>{$userData['userSongName']}</td>
             <td><img src='../controller/coverArt/{$userData['userCoverArt']}' width='100px' height='100px'></td>
-            <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav' </audio></td>
-            <td><a href='../controller/index.php?page=delete&id={$userData['id']}'/>Delete</td>
+            <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav'</audio>          
+            <div class='delete'>
+                <td class='td-delete'>
+                    <a href='../controller/index.php?page=delete&id={$userData['id']}'>Delete</a>
+                </td>
+            </div>  
         </tr>";
     }
     '</table>';

@@ -1,8 +1,9 @@
 <?php
-if($_SESSION['user_loggin_in'] === false){
+if(isset($_SESSION['user_loggin_in'])=== true){
+    include("top_view_logged_in.php");
+}else{
     include("top_view_logged_out.php");
-    ?>
-    <form action="../controller/index.php?page=createAccount" method="post">
+    ?>    <form action="../controller/index.php?page=createAccount" method="post">
         <label for="fullName">Name:             </label>
         <input type="text" name="fullName"><br>
         <label for="username">Username:         </label>
@@ -13,10 +14,7 @@ if($_SESSION['user_loggin_in'] === false){
         <input type="password" name="confirmPassword"><br>
         <input type="submit" name ="submit"  value="Login">
         <input type="hidden" name="action" value="createAccount">
-    </form>
-    <?php
-}else{
-    include("top_view_logged_in.php");
+    </form> <?php
 }
 include("bottom_view.php");
 ?>
