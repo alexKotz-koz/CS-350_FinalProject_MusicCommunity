@@ -5,7 +5,7 @@
     <title>Music Community</title>
     <style>
         body{
-            background-image: url("../controller/Zenith2 copy.jpeg") ;
+            background-image: url("../controller/Zenith2 copy.jpeg");
             background-size: cover;
             background-repeat: no-repeat;
             background-color: #333;
@@ -87,10 +87,10 @@
         </div>
         <div class="nav-right">
                 <a href="../controller/index.php?page=myAccount">My Account</a>
+                <a href='updateAccount.php'>Update Account</a>
                 <a href="../controller/index.php?page=logout">Sign Out</a>
                 <a href="../controller/index.php?page=upload">Upload</a>
         </div>
     </div>
-
 
 
