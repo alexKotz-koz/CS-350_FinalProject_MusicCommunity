@@ -9,6 +9,6 @@ if(isset($_SESSION['user_loggin_in']) === true){
         <input type="hidden" name="action" value="upload">
     </form><?php
 }else{
-    include("top_view_logged_in.php");
+    include("top_view_logged_out.php");
 }
 include("bottom_view.php");

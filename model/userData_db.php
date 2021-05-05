@@ -32,8 +32,12 @@ function validate($db,$user,$pass){
                 header("Location: ../view/myAccount_view.php");
             }
             else{
-                echo "BAD INPUT";
+                header("Location: ../view/login_view.php");
             }
+        }
+        else{
+            echo "Username or password was incorrect. Please try again";
+            header("Location: ../view/login_view.php");
         }
     }
     $findStatement->closeCursor();
@@ -43,8 +47,7 @@ function displayAllBrowse($db){
     $selectAll = "SELECT * FROM userData";
     $selectAllStatement = $db->prepare($selectAll);
     $selectAllStatement->execute();
-    $fetchAll = $selectAllStatement->fetchAll();
-    return $fetchAll;
+    return $selectAllStatement->fetchAll();
 }
 
 // User Data
@@ -65,24 +68,34 @@ function displayUserSongs($db){
     $selectAll = "SELECT * FROM userdata WHERE ownerID={$userID}";
     $selectAllStatement = $db->prepare($selectAll);
     $selectAllStatement->execute();
-    $fetchAll = $selectAllStatement->fetchAll();
-    return $fetchAll;
+    return $selectAllStatement->fetchAll();
 }
 
 function getUserID($db){
-   // $userID = (string) $_SESSION['userID'];
     $selectName = "SELECT * FROM accounts JOIN userdata on accounts.id=userdata.ownerID";
     $selectNameStatement = $db->prepare($selectName);
     $selectNameStatement->execute();
-    $fetch = $selectNameStatement->fetchAll();
-    return $fetch;
+    return $selectNameStatement->fetchAll();
 }
 
 function deleteSong($db,$id){
-    $userID = (string) $_SESSION['userID'];
-    echo $userID;
     $delete = "DELETE FROM userdata WHERE userdata.id={$id}";
     $deleteStatement = $db->prepare($delete);
     $deleteStatement->execute();
     $deleteStatement->closeCursor();
+}
+
+function getAccountInfo($db, $id){
+    $select = "SELECT * FROM accounts WHERE id={$id}";
+    $selectStatement = $db->prepare($select);
+    $selectStatement->execute();
+    return $selectStatement->fetchAll();
+}
+
+function updateUser($db, $id, $fullName){
+    $update = "UPDATE accounts SET fullName=:fullName WHERE id={$id}";
+    $updateStatement = $db->prepare($update);
+    $updateStatement->bindValue(':fullName', $fullName);
+    //$updateStatement->bindValue(':password', $newPassword);
+    $updateStatement->execute();
 }

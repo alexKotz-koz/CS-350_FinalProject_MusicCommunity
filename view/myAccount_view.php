@@ -16,18 +16,13 @@ try{
             </tr>
             ';
     foreach ($userSongs as $userData){
-        $imageFilePath = "http://127.0.0.1:80/Homework/final/controller/coverArt/".$userData['userCoverArt'];
-
         echo"<tr><td>{$userData['userSongName']}</td>
-            <td><img src='../controller/coverArt/{$userData['userCoverArt']}' width='100px' height='100px'></td>
-            <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav'</audio>          
-            <div class='delete'>
+                <td><img src='../controller/coverArt/{$userData['userCoverArt']}' width='100px' height='100px'></td>
+                <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav'</audio>          
                 <td class='td-delete'>
                     <a href='../controller/index.php?page=delete&id={$userData['id']}'>Delete</a>
                 </td>
-            </div>  
-        </tr>";
-    }
+            </tr>";}
     '</table>';
 }catch(PDOException $e){
     $msg = $e->getMessage();

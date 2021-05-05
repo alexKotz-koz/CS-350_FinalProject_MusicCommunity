@@ -18,15 +18,13 @@ try{
                 <td>User</td>
                 <td>Song Title</td>
                 <td>Album Cover</td>
-                <td>Owner ID</td>
             </tr>
             ';
     foreach ($userID as $userData){
         echo"<tr><td>{$userData['fullName']}</td>
             <td>{$userData['userSongName']}</td>
             <td><img src='../controller/coverArt/{$userData['userCoverArt']}' width='100px' height='100px'></td>
-            <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav' </audio></td>
-            <td>{$userData['ownerID']}</td></tr>";
+            <td><audio controls><source id='source' src='../controller/uploads/{$userData['userSongFile']}' type='audio/wav'</audio></td>";
     }
 
     '</table>';

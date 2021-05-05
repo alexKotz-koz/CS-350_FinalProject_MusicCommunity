@@ -17,7 +17,7 @@ function createAccount(){
         $db = new PDO($dsn, $username,$password);
         if (isset($usernameForm) && isset($passwordForm)){
             if($passwordForm !== $confirmPassword){
-                echo "<p>Passwords do not match</p>";
+                header("Location: ../view/createAccount_view.php");
             }
             else{
                 $passwordForm = password_hash($passwordForm,PASSWORD_DEFAULT);
@@ -52,7 +52,6 @@ function upload(){
     $dsn = 'mysql:host=localhost;dbname=cs_350';
     $username = 'student';
     $password = 'CS350';
-
     ///include read me for php.ini
     try{
         $db = new PDO($dsn,$username, $password);
@@ -63,9 +62,8 @@ function upload(){
             $tmpCoverName = $coverArt['tmp_name'];
             $fileNameOg = $file['name'];
             $fileName = str_replace(".wav","", $fileNameOg);
-            echo $fileName;
             $coverArtName = $coverArt['name'];
-            $path = getcwd(). "\uploads\\". $fileName;
+            $path = getcwd(). "\uploads\\". $fileNameOg;
             $coverArtPath = getcwd()."\coverArt\\".$coverArtName;
             move_uploaded_file($tmpName, $path);
             move_uploaded_file($tmpCoverName, $coverArtPath);
@@ -78,7 +76,6 @@ function upload(){
         $msg = $e->getMessage();
         echo "<p>ERROR: $msg</p>";
     }
-
 }
 
 function delete(){
@@ -87,8 +84,6 @@ function delete(){
     $password = 'CS350';
     try{
         $db = new PDO($dsn,$username, $password);
-        //$file = $_FILES['uploadedSongFile'] ?? NULL;
-       // $coverArt = $_FILES['uploadedCoverArt'] ?? NULL;
         $id = $_GET['id'];
         deleteSong($db,$id);
         header("Location: ../view/myAccount_view.php");
@@ -97,6 +92,7 @@ function delete(){
         echo "<p>ERROR: $msg</p>";
     }
 }
+
 
 if($_SERVER['REQUEST_METHOD']=='GET'){
     switch ($page){
@@ -142,6 +138,4 @@ else if ($_SERVER['REQUEST_METHOD']=='POST'){
             upload();
             break;
     }
-
-
 }
