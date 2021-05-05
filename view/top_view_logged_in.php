@@ -87,7 +87,7 @@
         </div>
         <div class="nav-right">
                 <a href="../controller/index.php?page=myAccount">My Account</a>
-                <a href='updateAccount.php'>Update Account</a>
+                <a href='../view/updateAccount.php'>Update Account</a>
                 <a href="../controller/index.php?page=logout">Sign Out</a>
                 <a href="../controller/index.php?page=upload">Upload</a>
         </div>
